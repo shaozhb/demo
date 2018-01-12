@@ -90,4 +90,10 @@ public class UserController {
         result.put("state", "success");
         return result.toJSONString();
     }
+
+
+    @RequestMapping("/test")
+    public  String getTest(){
+        return "test";
+    }
 }

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="/js/jquery.min.js" ></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="/js/bootstrap-table.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-table.css" rel="stylesheet" />
+</head>
+<body>
+<div class="my_table_bar">
+    <div class="col-xs-10 bar_title">
+        <p align="center">
+            <strong>成果的知识产权情况</strong>
+        </p>
+    </div>
+    <div class="col-xs-2 bar_option">
+        <a class="insert" href="javascript:addRow(2);" title="新增行">
+            <i class="glyphicon glyphicon-plus" id="editTable_add_kjcg"></i>
+            新增
+        </a>
+    </div>
+</div>
+<table id="reportTable2" class="table table-bordered table-hover"></table>
+</body>
+<script type="text/javascript">
+
+    function loadEditTable(pid){
+        //重置table内数据
+        $('#reportTable1').bootstrapTable('destroy');//这里必须要添加这个销毁，否则新增、修改、查看的切换可编辑列表中的数据可能加载出现问题。
+        $('#reportTable2').bootstrapTable('destroy');
+
+        $('#reportTable1').bootstrapTable({
+            method: 'get',
+            url:'/user/pageInfo',
+            editable:true,//开启编辑模式
+            clickToSelect: true,
+            cache : false,
+            columns: [
+                {field:"JX_NAME",title:"所获奖项明称",align:"center",edit:{required:true,type:'text' }},
+                {field:"JX_ORG",title:"奖励单位",align:"center",edit:{type:'text' }},
+                {field:"JX_TIME",title:"奖励年度",align:"center",edit:{type:'text' }},
+                {field:"JX_RANK",title:"授奖等级",align:"center",edit:{type:'text' }},
+                {field:"operate",title:"操作",align:"center",formatter : operateFormatter1,edit:false}
+            ],
+            onEditableHidden: function(field, row, $el, reason) { // 当编辑状态被隐藏时触发
+                if(reason === 'save') {
+                    var $td = $el.closest('tr').children();
+                    $td.eq(-1).html((row.price*row.number).toFixed(2));
+                    $el.closest('tr').next().find('.editable').editable('show'); //编辑状态向下一行移动
+                } else if(reason === 'nochange') {
+                    $el.closest('tr').next().find('.editable').editable('show');
+                }
+            },
+            onEditableSave: function (field, row, oldValue, $el) {
+                $table = $('#reportTable1').bootstrapTable({});
+                $table.bootstrapTable('updateRow', {index: row.rowId, row: row});
+            }
+        });
+
+        $('#reportTable2').bootstrapTable({
+            method: 'get',
+            url:contextPath + '/cggl/getZscqTable.do?code='+pid,
+            editable:true,//开启编辑模式
+            clickToSelect: true,
+            cache : false,
+            columns: [
+                {field:"ZSCQ_XS",title:"知识产权形式",align:"center",edit:{required:true ,type:'text'}},
+                {field:"ZSCQ_NAME",title:"所获知识产权项目名称",align:"center",edit:{type:'text'}},
+                {field:"ZSCQ_CODE",title:"知识产权号",align:"center",edit:{type:'text'}},
+                {field:"ZSCQ_TIME",title:"授权时间",align:"center",edit:{type:'text'}},
+                {field:"operate",title:"操作",align:"center",formatter : operateFormatter2,edit:false}
+            ],
+            onEditableSave: function (field, row, oldValue, $el) {
+                $table = $('#reportTable1').bootstrapTable({});
+                $table.bootstrapTable('updateRow', {index: row.rowId, row: row});
+            }
+        });
+
+    }
+
+</script>
+</html>
