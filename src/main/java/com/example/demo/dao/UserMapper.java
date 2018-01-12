@@ -11,12 +11,13 @@ import java.util.List;
 /**
  * Created by zhibin.shao on 2018/1/10.
  */
+@Mapper
 public interface UserMapper {
 
 //    @Insert("insert into user(account,password,name,sex,phone,email,states,created_at)\n" +
 //            "    values\n" +
 //            "            (#{account},#{password},#{name},#{sex},#{phone},#{email},#{states},#{created_at})")
-    int addUser(User user);
+    Integer addUser(User user);
 
     List<User> getUserList();
     Integer updateUser(User user);

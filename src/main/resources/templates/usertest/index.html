@@ -88,6 +88,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="Tip" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -123,8 +124,10 @@
             queryParams:queryParam,
             pagination:true,//显示分页条：页码，条数等
             striped:true,//隔行变色
+            cache:false,
             pageNumber:1,//首页页码
             pageSize:10,//分页，页面数据条数
+            pageList: [10, 25, 50, 100],
             uniqueId:"id",//Indicate an unique identifier for each row
             sidePagination:"server",//在服务器分页
             height:580,
@@ -206,6 +209,7 @@
             }
         });
     }
+
     //修改用户
 
 </script>

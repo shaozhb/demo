@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.demo.dao.UserMapper;
 import com.example.demo.model.User;
 import com.github.pagehelper.PageHelper;
-
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,17 +42,20 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value="pageInfo",produces="html/text;charset=UTF-8")
     public  String pageInfo(@RequestParam int pageNumber,int pageSize,HttpServletResponse response) {
-//        response.setContentType("text/json");
-//        response.setCharacterEncoding("utf-8");
-//        List<User> users =userMapper.getUserList();
-//        int total = users.size();
+
+
+        response.setContentType("text/json");
+        response.setCharacterEncoding("utf-8");
+        List<User> users =userMapper.getUserList();
+        int total = users.size();
         PageHelper.startPage(pageNumber,pageSize);
-        List<User> list=userMapper.getUserList();
-        PageInfo pageInfo = new PageInfo(list);
+        List<User> pageInfo=userMapper.getUserList();
         JSONObject result = new JSONObject();
-        result.put("rows",pageInfo.getList());
-//        result.put("total",total);
+        result.put("rows",pageInfo);
+        result.put("total",total);
+        System.out.println(result.toJSONString());
         return result.toJSONString();
+
     }
     @ResponseBody
     @RequestMapping("/addUser")
