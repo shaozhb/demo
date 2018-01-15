@@ -7,7 +7,6 @@
     <script type="text/javascript" src="/js/jquery.min.js" ></script>
     <script type="text/javascript" src="/js/bootstrap.min.js" ></script>
     <script type="text/javascript" src="/js/bootstrap-table.js"></script>
-    <script type="text/javascript" src="/js/user.js"/>
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/bootstrap-table.css" rel="stylesheet" />
 </head>
@@ -21,8 +20,7 @@
         <!-- 工具栏 -->
         <div id="toolbar">
             <input type="button" value="新增用户" id="addBtn" data-toggle="modal" data-target="#addUserModal" class="btn btn-primary"/>
-            <input type="button" value="修改用户" id="editBtn" data-toggle="modal" data-target="#editUserModal" class="btn btn-primary" onclick="editUser()"/>
-            <input type="button" value="删除用户" id="deleteBtn" data-toggle="modal" data-target="#deleteUserModal" class="btn btn-primary" onclick="deleteUser()"/>
+            <input type="button" value="新增行" id="addrows" data-toggle="modal" data-target="#addrows" class="btn btn-primary"/>
         </div>
         <!-- bootstrapTable -->
     </form>
@@ -30,6 +28,7 @@
 </section>
 
 <!-- 新增用户的模态框，在修改用户中将获取一行的值放入input中，改变一些参数继续使用 -->
+
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -105,102 +104,9 @@
         </div>
     </div>
 </div>
+
 <!-- 修改用户的模态框 -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>修改用户</h3>
-            </div>
-            <div class="modal-body">
-                <form id="editForm" method="post" class="form-horizontal">
-                    <div class="form-group" style="display:none">
-                        <label for="editId" class="col-sm-2 control-label">ID</label>
-                        <div class="col-sm-7">
-                            <input type="id" name="id"   class="form-control" id="editId" placeholder="ID" />
-                        </div>
-                        <label id="errorId" for="editId" class="col-sm-3 control-label"></label>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAccount" class="col-sm-2 control-label">账户</label>
-                        <div class="col-sm-7">
-                            <input type="account" name="account" class="form-control" id="editAccount"/>
-                        </div>
-                        <label id="errorAccount" for="inputAccount" class="col-sm-3 control-label"></label>
-                    </div>
-                    <div class="form-group" >
-                        <label for="inputPassword" class="col-sm-2 control-label">密码</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="password" class="form-control" id="editPassword"/>
-                        </div>
-                        <label id="errorPassword" for="inputPassword" class="col-sm-3 control-label"></label>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputName" class="col-sm-2 control-label">姓名</label>
-                        <div class="col-sm-7">
-                            <input type="name" name="name" class="col-sm-4 form-control" id="editName" />
-                        </div>
-                        <label id="errorName" for="inputName" class="col-sm-3 control-label"></label>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputSex" class="col-sm-2 control-label">性别</label>
-                        <div class="col-sm-7">
-                            <input type="sex" name="sex" class="col-sm-4 form-control" id="editSex"/>
-                        </div>
-                        <label id="errorSex" for="inputSex" class="col-sm-3 control-label"></label>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPhone" class="col-sm-2 control-label">手机</label>
-                        <div class="col-sm-7">
-                            <input type="phone" name="phone" class="col-sm-4 form-control" id="editPhone"/>
-                        </div>
-                        <label id="errorPhone" for="inputPhone" class="col-sm-3 control-label"></label>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
-                        <div class="col-sm-7">
-                            <input type="email" name="email" class="col-sm-4 form-control" id="editEmail"/>
-                        </div>
-                        <label id="errorEmail" for="inputEmail" class="col-sm-3 control-label"></label>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputStates" class="col-sm-2 control-label">状态</label>
-                        <div class="col-sm-7">
-                            <input type="states" name="states" class="col-sm-4 form-control" id="editStates"/>
-                        </div>
-                        <label id="errorStates" for="inputStates" class="col-sm-3 control-label"></label>
-                    </div>
-                    <div class="form-group" style="display:none">
-                        <label for="inputCreated_at" class="col-sm-2 control-label">创建时间</label>
-                        <div class="col-sm-7">
-                            <input type="created_at" name="created_at" class="col-sm-4 form-control" id="editCreated_at" />
-                        </div>
-                        <label id="errorCreated_at" for="inputCreated_at" class="col-sm-3 control-label"></label>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="conf" class="btn btn-default" onclick="updateUser()">确定</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="resetAddModal()">取消</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="updateEnd" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>提示</h3>
-            </div>
-            <div class="modal-body" align="center">
-                <h4 id="al">修改成功</h4>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 </body>
 
 <script type="text/javascript">
@@ -222,12 +128,13 @@
             cache:false,
             editable:true,
             pageNumber:1,//首页页码
-            pageSize:10,//分页，页面数据条数
+            pageSize:100,//分页，页面数据条数
             pageList: [10, 25, 50, 100],
             uniqueId:"id",//Indicate an unique identifier for each row
             sidePagination:"server",//在服务器分页
             height:580,
             toolbar:"#toolbar",//工具栏
+            showRefresh : true,//刷新
             columns : [{
                 checkbox:"true",
                 field : "box"
@@ -262,12 +169,7 @@
                 title : "创建时间",
                 field : "created_at",
                 sortable : true
-            }],
-            search : true,//搜索
-            searchOnEnterKey : true,
-            showRefresh : true,//刷新
-            showToggle : true//
-
+            }]
         });
     }
     function queryParam(params){
@@ -279,6 +181,7 @@
         };
         return param;
     }
+
     //点击取消后清空表单中已写信息
     function resetAddModal(){
         document.getElementById("addUserForm").reset();
@@ -309,49 +212,6 @@
     }
 
     //修改用户
-    function editUser(){
-        //获取选中行的数据
-        var rows = $("#dataGrid").bootstrapTable('getSelections');
-        if(rows.length!=1){
-            document.getElementById("tipContent").innerText="请选择一行数据";
-            $("#Tip").modal('show');
-        }
-        else{
-            var row = rows[0];
-            $('#editId').val(row.id);
-            $('#editAccount').val(row.account);
-            $('#editPassword').val(row.password);
-            $('#editName').val(row.name);
-            $('#editSex').val(row.sex);
-            $('#editEmail').val(row.email);
-            $('#editPhone').val(row.phone);
-            $('#editStates').val(row.states);
-            $('#editCreated_at').val(row.created_at);
-            $("#editModal").modal("show");
-        }
-    }
-    function updateUser(){
-        var param = $("#editForm").serializeArray();
-        //设为disable则无法获取
-        $.ajax({
-            url:"/user/updateUser",
-            method:"post",
-            data:param,
-            dataType:"json",
-            success:function(data){
-                if(data.state=="success"){
-                    $("#editModal").modal("hide");
-                    document.getElementById("tipContent").innerText="修改成功";
-                    $("#Tip").modal('show');
-                }
-            },
-            error:function(data){
-                alert("wrong");
-            }
-        });
-    }
-
-    //删除用户
 
 </script>
 

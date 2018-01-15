@@ -20,8 +20,7 @@
         </div>
         <!-- bootstrapTable -->
     </form>
-    <table id="dataGrid">
-    </table>
+    <table id="dataGrid"></table>
 </section>
 <!-- 新增用户的模态框，在修改用户中将获取一行的值放入input中，改变一些参数继续使用 -->
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog">
@@ -334,6 +333,36 @@
             },
             error:function(data){
                 alert("wrong");
+            }
+        });
+    }
+
+    //删除用户
+    function deleteUser(){
+        var rows = $("#dataGrid").bootstrapTable("getSelections");
+        var ids = [];
+        var len = rows.length;
+        debugger;
+        for(var i=0;i<len;i++){
+            ids.push(rows[i].id);
+        }
+        debugger;
+        $.ajax({
+            url:"/user/deleteUser",
+            dataType:"json",
+            traditional: true,//属性在这里设置
+            method:"post",
+            data:{
+                "ids":ids
+            },
+            success:function(data){
+                document.getElementById("tipContent").innerText="删除成功";
+                $("#Tip").modal('show');
+                $("#dataGrid").bootstrapTable("refresh");
+            },
+            error:function(){
+                document.getElementById("tipContent").innerText="删除失败";
+                $("#Tip").modal('show');
             }
         });
     }

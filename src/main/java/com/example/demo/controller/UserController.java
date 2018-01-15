@@ -94,6 +94,6 @@ public class UserController {
 
     @RequestMapping("/test")
     public  String getTest(){
-        return "test";
+        return "test1";
     }
 }
